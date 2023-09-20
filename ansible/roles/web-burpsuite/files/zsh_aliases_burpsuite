@@ -1,0 +1,2 @@
+alias burpsuite_wrapper='JAVA_HOME=/usr/lib/jvm/java-17-openjdk /usr/sbin/burpsuite'
+alias burpsuite=burpsuite_wrapper

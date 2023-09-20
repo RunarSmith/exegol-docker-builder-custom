@@ -1,0 +1,10 @@
+---
+# tasks file for web-burpsuite
+
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: burpsuite
+    package: burpsuite
+
+...

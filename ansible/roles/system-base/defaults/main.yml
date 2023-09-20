@@ -1,0 +1,4 @@
+---
+# defaults file for system-base
+
+locale_system: en_US.UTF-8

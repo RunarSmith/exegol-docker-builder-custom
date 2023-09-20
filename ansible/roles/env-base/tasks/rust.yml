@@ -1,0 +1,11 @@
+---
+
+- name: install packages rust (include rustc and cargo), rustup
+  ansible.builtin.package:
+    name:
+      - rustup
+
+- name: set default rust version, and install cargo
+  ansible.builtin.command: "rustup default stable"
+
+...

@@ -1,0 +1,19 @@
+---
+# tasks file for scanner-common-tools
+
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: "{{ item }}"
+    package: "{{ item }}"
+  with_items:
+    - autorecon
+    - sslscan
+
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: nmap
+    package: nmap
+
+...

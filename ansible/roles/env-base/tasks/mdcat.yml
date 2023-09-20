@@ -1,0 +1,9 @@
+---
+
+- name: install mdcat - markdown cat
+  ansible.builtin.package:
+    name:
+      - mdcat
+    state: present
+
+...

@@ -1,0 +1,43 @@
+---
+
+# generic task to install a package from AUR (archlinux)
+# call it :
+# - name: install package 
+#   ansible.builtin.include_tasks: ../../lib-tasks/install-aur-package.yml
+#   vars:
+#     name: <package-name>
+#   when: ansible_distribution == "Archlinux"
+
+- name: "cleaning {{ name }} item (archlinux)"
+  ansible.builtin.file:
+    path: "/tmp/{{ name }}"
+    state: absent
+
+- name: "Clone {{ name }} items from AUR (archlinux)"
+  git:
+    repo: "https://aur.archlinux.org/{{ name }}.git"
+    dest: "/tmp/{{ name }}"
+    update: true
+
+- name: give rights to 'aur_builder' user on compilation files
+  ansible.builtin.file:
+    dest: "/tmp/{{ name }}/"
+    owner: aur_builder
+    group: aur_builder
+    mode: 'u=rwX,g=rX,o=rX'
+    recurse: yes
+
+- name: "Building and installing {{ name }} item (archlinux)"
+  command:
+    chdir: "/tmp/{{ name }}"
+    cmd: "makepkg --noconfirm --noprogressbar --syncdeps --install --clean --rmdeps"
+  become: true
+  become_user: aur_builder
+
+- name: "cleaning {{ name }} item (archlinux)"
+  ansible.builtin.file:
+    path: "/tmp/{{ name }}"
+    state: absent
+
+
+...

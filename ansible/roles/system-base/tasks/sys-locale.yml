@@ -1,0 +1,11 @@
+---
+
+- name: "[locale] Ensure localisation files for '{{ locale_system }}' are available"
+  become: true
+  locale_gen:
+    name: "{{ locale_system }}"
+    state: present
+
+
+- name: "[locale] Configure locale to '{{ locale_system }}'"
+  command: locale-gen

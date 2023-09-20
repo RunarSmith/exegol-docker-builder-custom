@@ -1,0 +1,21 @@
+---
+
+- name: Download blackarch setup script
+  ansible.builtin.get_url:
+    url: https://blackarch.org/strap.sh
+    dest: /tmp/strap.sh
+
+- name: make script executable
+  ansible.builtin.file:
+    path: /tmp/strap.sh
+    mode: 'u+rwx'
+
+- name: Setup blackarch repository
+  command: "/tmp/strap.sh"
+
+- name: remove blackarch install script 
+  ansible.builtin.file:
+    path: /tmp/strap.sh
+    state: absent
+
+...

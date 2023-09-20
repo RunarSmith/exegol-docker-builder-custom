@@ -1,0 +1,8 @@
+---
+- name: "[APT-mirrors] Updates debian-like systems"
+  become: true
+  community.general.pacman: 
+    remove_nosave: true
+    update_cache: true
+    upgrade: true
+...

@@ -1,0 +1,9 @@
+---
+
+- name: install application
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/generic-add-app.yml"
+  vars:
+    name: fzf
+    package: fzf
+
+...

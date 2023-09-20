@@ -1,0 +1,82 @@
+---
+# tasks file for env-base
+
+- name: install usefull tools
+  ansible.builtin.package:
+    name:
+      - autoconf
+      - automake
+      - chromium
+      - cmake
+      - dos2unix
+      - gcc # C and C++ compiler
+      - git
+      - gnupg
+      - go
+      - jq
+      - jdk11-openjdk
+      - jre11-openjdk
+      - jre11-openjdk-headless
+      - jdk17-openjdk
+      - jre17-openjdk
+      - jre17-openjdk-headless
+      - make
+      - nano
+      - npm
+      - p7zip
+      - perl
+      - sshpass
+      #- telnet
+      - tidy
+      - time
+      - tree
+      - tmux
+      - unrar
+      - unzip
+      - wget
+      - xz
+      - zip
+      - zsh
+    state: present
+
+- name: "Change shell to /bin/zsh"
+  user:
+    name: root
+    shell: /bin/zsh
+
+- name: install application
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/generic-add-app.yml"
+  vars:
+    name: "{{ item }}"
+    package: "{{ item }}"           # deb or yum or pacman ...
+  with_items:
+    - curl
+    - dnsutils
+
+
+
+- name: arsenal
+  include_tasks: arsenal.yml
+
+- name: firefox
+  include_tasks: firefox.yml
+
+- name: mdcat
+  include_tasks: mdcat.yml
+
+- name: ruby
+  include_tasks: ruby.yml
+
+- name: rust
+  include_tasks: rust.yml
+
+- name: screen
+  include_tasks: screen.yml
+
+- name: tmux
+  include_tasks: tmux.yml
+
+- name: vim
+  include_tasks: vim.yml
+
+...

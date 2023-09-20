@@ -1,0 +1,15 @@
+---
+
+- name: install package 
+  ansible.builtin.include_tasks: ../../lib-tasks/install-aur-package.yml
+  vars:
+    name: arsenal
+  when: ansible_distribution == "Archlinux"
+
+- name: install application
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/generic-add-app.yml"
+  vars:
+    name: arsenal
+    aur_package: arsenal
+
+...

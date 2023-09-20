@@ -1,0 +1,52 @@
+---
+
+# generic task pato install a package/application
+# call it :
+# - name: install application
+#   ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+#   vars:
+#     name: <application-name>
+#     package: <package-name>           # deb or yum or pacman ...
+#     aur_package: <aur_package-name>   # AUR (archlinux) specific
+
+# if a file "zsh_history_<name>" exists in the "files" folder of the role, it will be integrated
+# if a file "zsh_aliases_<name>" exists in the "files" folder of the role, it will be integrated
+
+- name: "App {{ name }}: Install package {{ package }}"
+  ansible.builtin.package:
+    name: "{{ package }}"
+    state: present
+  when: package is defined
+
+- name: "App {{ name }}: Install AUR package {{ aur_package }} (archlinux)"
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/install-aur-package.yml"
+  vars:
+    name: "{{ aur_package }}"
+  when: (ansible_distribution == "Archlinux") and ( aur_package is defined)
+
+- name: "App {{ name }}: test if a history file is available"
+  local_action: stat path="{{ role_path }}/files/zsh_history_{{ name }}"
+  register: history_file
+
+- name: "App {{ name }}: add history"
+  ansible.builtin.lineinfile:
+    path: /root/.zsh_history
+    create: true
+    line: "{{ lookup('file', '{{ role_path }}/files/zsh_history_{{ name }}') }}"
+    insertafter: EOF
+  when: history_file.stat.exists
+
+
+
+- name: "App {{ name }}: test if an alias file is available"
+  local_action: stat path="{{ role_path }}/files/zsh_aliases_{{ name }}"
+  register: aliases_file
+
+- name: "App {{ name }}: add aliases"
+  ansible.builtin.copy:
+    src: "zsh_aliases_{{ name }}"
+    dest: "/.exegol/setup/aliases.d/{{ name }}"
+    mode: '0444'
+  when: aliases_file.stat.exists
+
+...

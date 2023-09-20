@@ -1,0 +1,53 @@
+---
+# tasks file for system-base
+
+- name: install base packages
+  ansible.builtin.package:
+    name:
+      - binutils
+      - bind  # dnsutils, nslookup, dig
+      - fakeroot   # used to build packages from AUR
+      - git        # used to build packages from AUR
+      - iputils
+      - iproute2
+      - jack2
+      - logrotate
+      - man-db
+      # - mlocate   # replaced by plocate
+      - net-tools
+      - openresolv
+      - plocate
+      - sudo
+    state: present
+
+- name: Set locale
+  include_tasks: sys-locale.yml
+
+- name: update Archlinux packages
+  include_tasks: packages-update-archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: update Debian packages
+  include_tasks: packages-update-debian.yml
+  when: ansible_distribution == "Debian"
+
+- name: BlackArch
+  include_tasks: packages-blackarch.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: prepare for AUR building
+  include_tasks: packages-AUR.yml
+  when: ansible_distribution == "Archlinux"
+
+#- name: paru (archlinux AUR helper)
+#  include_tasks: packages-paru.yml
+#  when: ansible_distribution == "Archlinux"
+
+- name: install some utilities (archlinux)
+  ansible.builtin.package:
+    name:
+      - pacman-contrib
+    state: present
+  when: ansible_distribution == "Archlinux"
+
+...

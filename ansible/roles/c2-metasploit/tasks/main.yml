@@ -1,0 +1,10 @@
+---
+# tasks file for c2-metasploit
+
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: msfconsole
+    package: metasploit
+
+...

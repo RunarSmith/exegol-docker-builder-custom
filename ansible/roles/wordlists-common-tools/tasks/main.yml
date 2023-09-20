@@ -1,0 +1,9 @@
+---
+# tasks file for wordlists-common-tools
+
+- name: Install common wordlist-common-tools
+  ansible.builtin.package:
+    name: seclists
+    state: present
+
+...

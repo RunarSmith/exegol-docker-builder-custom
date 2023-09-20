@@ -1,0 +1,19 @@
+---
+
+- name: firefox archlinux
+  include_tasks: firefox_archlinux.yml
+
+- name: install firefox
+  ansible.builtin.package:
+    name:
+      - firefox
+    state: present
+  when: ansible_distribution != "Archlinux"
+
+
+#- name: add history
+#  ansible.builtin.include_tasks: ../../lib-tasks/add-history.yml
+#  vars:
+#    name: firefox
+
+...

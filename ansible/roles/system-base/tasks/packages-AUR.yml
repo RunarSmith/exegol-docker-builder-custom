@@ -1,0 +1,20 @@
+---
+
+# https://wiki.archlinux.org/title/Ansible#Package_management
+
+- name: create user aur_user to build AUR packages
+  ansible.builtin.user: name=aur_builder
+
+- name: add user aur_builder to sudoers
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+    state: present
+    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    validate: /usr/sbin/visudo -cf %s
+    create: yes
+
+# Then, AUR helpers or makepkg can be used associated with the Ansible parameters 
+# become: yes
+# become_user: aur_builder
+
+...

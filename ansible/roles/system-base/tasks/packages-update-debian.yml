@@ -1,0 +1,11 @@
+---
+
+- name: "[APT] Updates debian-like systems"
+  become: true
+  ansible.builtin.apt: 
+    autoclean: yes
+    autoremove: yes
+    update_cache: yes
+    upgrade: full
+
+...

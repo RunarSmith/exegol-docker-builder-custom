@@ -1,0 +1,19 @@
+---
+
+- name: install tmux
+  ansible.builtin.package:
+    name:
+      - tmux
+    state: present
+
+- name: set tmux configuration
+  ansible.builtin.copy:
+    src: tmux.conf
+    dest: /root/.tmux.conf
+
+- name: set hushlogin
+  ansible.builtin.copy:
+    src: hushlogin
+    dest: /root/.hushlogin
+
+...

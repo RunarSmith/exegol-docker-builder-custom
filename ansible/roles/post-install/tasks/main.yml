@@ -1,0 +1,19 @@
+---
+# tasks file for post-install
+
+- name: add marker in end of history file
+  ansible.builtin.lineinfile:
+    path: /root/.zsh_history
+    line: "# -=-=-=-=-=-=-=- YOUR COMMANDS BELOW -=-=-=-=-=-=-=- #"
+    insertafter: EOF
+
+- name: clean pacman cache (archlinux)
+  ansible.builtin.command: "paccache -r -k0"
+  when: ansible_distribution == "Archlinux"
+
+- name: clean pacman cache (archlinux)
+  ansible.builtin.command: "pacman -Sc"
+  when: ansible_distribution == "Archlinux"
+
+- name: call updatedb
+  ansible.builtin.command: "updatedb"

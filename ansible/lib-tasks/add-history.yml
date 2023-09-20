@@ -1,0 +1,17 @@
+---
+
+# generic task to add command history for zsh
+# call it :
+# - name: add history
+#   ansible.builtin.include_tasks: ../../lib-tasks/add-history.yml
+#   vars:
+#     name: <package-name>
+
+- name: "Append {{ name }} history "
+  ansible.builtin.lineinfile:
+    path: /root/.zsh_history
+    create: true
+    line: "{{ lookup('file', '{{ role_path }}/files/zsh_history_{{ name }}') }}"
+    insertafter: EOF
+
+...

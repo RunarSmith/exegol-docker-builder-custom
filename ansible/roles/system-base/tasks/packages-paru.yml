@@ -1,0 +1,35 @@
+---
+# tasks file
+
+# paru is a helper for AUR
+# we need it for kewlfft.aur.aur usage in roles
+
+- name: Clone paru PKGBUILD
+  git:
+    repo: https://aur.archlinux.org/paru-bin.git
+    dest: "/tmp/paru-bin"
+    update: true
+
+- name: give rights to 'aur_builder' user on compilation files
+  ansible.builtin.file:
+    dest: "/tmp/paru-bin/"
+    owner: aur_builder
+    group: aur_builder
+    mode: 'u=rwX,g=rX,o=rX'
+    recurse: yes
+
+- name: Build 'paru'
+  command:
+    chdir: "/tmp/paru-bin"
+    #cmd: "sudo -u nobody makepkg -f --noconfirm"
+    cmd: "makepkg -si --noconfirm"
+    #cmd: "makepkg -f --noconfirm"
+  become: true
+  become_user: aur_builder
+
+- name: cleaning
+  ansible.builtin.file:
+    path: "/tmp/paru-bin/"
+    state: absent
+
+...

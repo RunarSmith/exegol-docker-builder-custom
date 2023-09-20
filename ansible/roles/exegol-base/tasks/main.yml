@@ -1,0 +1,81 @@
+---
+# tasks file for exegol-base
+
+- name: Ensure /.exegol do not exists (purge it)
+  ansible.builtin.file:
+    path: /.exegol
+    state: absent
+
+# Setup perms
+- name: create directory /.exegol
+  ansible.builtin.file:
+    path: /.exegol
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+
+# Setup perms
+- name: create directory /.exegol/setup/aliases.d
+  ansible.builtin.file:
+    path: /.exegol/setup/aliases.d
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+
+# Setup perms
+- name: create directory /.exegol/setup
+  ansible.builtin.file:
+    path: /.exegol/setup
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+
+- name: copy entrypoint to /.exegol. This file is the entrypoint called from DockerFile
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/.exegol/{{ item }}"
+    mode: '0544'
+  with_items:
+    - entrypoint.sh
+    - load_supported_setups.sh
+
+- name: copy aliases tp /.exegol. This file will be loaded by zshrc
+  ansible.builtin.copy:
+    src: zsh_aliases
+    dest: /.exegol/setup/aliases.d/zsh_aliases
+    mode: '0444'
+
+- name: copy setup sh files to '/.exegol'. These files will be loaded by zshrc
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/.exegol/setup/{{ item }}"
+    mode: '0544'
+  with_items:
+    - hosts.sh
+    - profile.sh
+
+- name: oh-my-zsh
+  include_tasks: oh-my-zsh.yml
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /var/log/exegol
+    state: directory
+    mode: '0755'
+
+- name: Install package asciinema from repo
+  ansible.builtin.package:
+    name:
+      - asciinema
+    state: present
+
+- name: fzf (command line fuzzy finder)
+  include_tasks: fzf.yml
+
+- name: openvpn
+  include_tasks: openvpn.yml
+
+...

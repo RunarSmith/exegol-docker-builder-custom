@@ -1,0 +1,16 @@
+---
+
+# generic task to add aliases for zsh
+# call it :
+# - name: add aliases
+#   ansible.builtin.include_tasks: ../../lib-tasks/add-aliases.yml
+#   vars:
+#     name: <package-name>
+
+- name: "copy {{ name }} aliases"
+  ansible.builtin.copy:
+    src: "zsh_aliases_{{ name }}"
+    dest: "/.exegol/setup/aliases.d/{{ name }}"
+    mode: '0444'
+
+...

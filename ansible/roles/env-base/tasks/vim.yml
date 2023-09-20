@@ -1,0 +1,18 @@
+---
+
+- name: install vim
+  ansible.builtin.package:
+    name:
+      - vim
+    state: present
+
+- name: Install The Ultimate vimrc
+  ansible.builtin.git:
+    repo: https://github.com/amix/vimrc.git
+    dest: /root/.vim_runtime
+    depth: 1
+
+- name: call install script of The Ultimate vimrc
+  script: "/root/.vim_runtime/install_awesome_vimrc.sh"
+
+...

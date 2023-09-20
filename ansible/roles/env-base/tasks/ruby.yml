@@ -1,0 +1,53 @@
+---
+
+- name: install ruby
+  ansible.builtin.package:
+    name:
+      - ruby
+      - ruby-bundler
+    state: present
+
+#- name: install rvm
+#  kewlfft.aur.aur:
+#    name: rvm
+#    use: paru
+#    state: present
+
+#- name: "add keys"
+#  ansible.builtin.command: "gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB"
+
+#- name: Download rvm setup script
+#  ansible.builtin.get_url:
+#    url: https://get.rvm.io
+#    dest: /tmp/install-rvm.sh
+
+#- name: make script executable
+#  ansible.builtin.file:
+#    path: /tmp/install-rvm.sh
+#    mode: 'u+rwx'
+
+#- name: Setup rvm 
+#  command: "bash -s stable --ruby /tmp/install-rvm.sh"
+
+#- name: remove  install script 
+#  ansible.builtin.file:
+#    path: /tmp/install-rvm.sh
+#    state: absent
+
+
+
+#- name: rvm autolibs
+#  command: "rvm autolibs read-fail"
+
+#- name: rvm ignore warnings
+#  command: "rvm rvmrc warning ignore allGemfiles"
+
+#- name: gem update
+#  command: "gem update"
+
+    # Set Global config path to vendor
+    # All programs using bundle will store their deps in vendor/
+- name: bundle set path
+  command: "bundle config path vendor/"
+
+...

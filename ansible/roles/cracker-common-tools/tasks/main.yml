@@ -1,0 +1,15 @@
+---
+# tasks file for cracker-common-tools
+
+- name: install application
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/generic-add-app.yml"
+  vars:
+    name: "{{ item }}"
+    package: "{{ item }}"           # deb or yum or pacman ...
+  with_items:
+    - fcrackzip
+    - hashcat
+    - hydra
+    - john
+
+...

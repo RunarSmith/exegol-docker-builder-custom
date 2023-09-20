@@ -1,0 +1,24 @@
+---
+
+- name: Gather facts
+  hosts: all
+  gather_facts: yes
+
+- name: Setup
+  hosts: all
+  gather_facts: no
+  roles:
+    - env-base
+    - exegol-base # exegol base deployment
+    - c2-havoc
+    - c2-metasploit
+    - cracker-common-tools
+    - exploit-common-tools
+    - scanner-common-tools
+    - services-common-tools
+    - tunnel-common-tools
+    - webapp-common-tools
+    - web-common-tools
+    - web-burpsuite
+    - wordlists-common-tools
+    - post-install

@@ -1,0 +1,27 @@
+---
+# tasks file for services-common-tools
+
+- name: install common services tools
+  ansible.builtin.package:
+    name:
+      - gnu-netcat
+      - rlwrap
+      - socat
+    state: present
+
+- name: Service FTP
+  include_tasks: ftp.yml
+
+- name: Service NFS
+  include_tasks: nfs.yml
+
+- name: Service SMB
+  include_tasks: smb.yml
+
+- name: Service SNMP
+  include_tasks: snmp.yml
+
+- name: Service SSH
+  include_tasks: ssh.yml
+
+...

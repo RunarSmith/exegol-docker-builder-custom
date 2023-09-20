@@ -1,0 +1,14 @@
+---
+
+- name: install ssh tools
+  ansible.builtin.package:
+    name:
+      - putty
+    state: present
+
+- name: add history
+  ansible.builtin.include_tasks: ../../lib-tasks/add-history.yml
+  vars:
+    name: ssh
+
+...

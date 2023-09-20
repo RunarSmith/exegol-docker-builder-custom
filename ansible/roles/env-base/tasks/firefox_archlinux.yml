@@ -1,0 +1,10 @@
+---
+
+- name: install application
+  ansible.builtin.include_tasks: "{{ role_path }}/../../lib-tasks/generic-add-app.yml"
+  vars:
+    name: firefox
+    #aur_package: firefox-esr-bin
+    package: firefox
+
+...

@@ -1,0 +1,10 @@
+---
+
+- name: install ftp tools
+  ansible.builtin.package:
+    name:
+      - inetutils # contains the basic "ftp" client
+      - python-pyftpdlib
+    state: present
+
+...

@@ -1,0 +1,19 @@
+---
+# tasks file for web-common-tools
+
+- name: Install common web-common-tools
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: "{{ item }}"
+    package: "{{ item }}"
+  with_items:
+    - gobuster
+    - wfuzz
+
+- name: Install common web-common-tools
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: updog
+    aur_package: python-updog
+
+...

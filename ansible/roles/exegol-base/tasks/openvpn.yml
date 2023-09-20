@@ -1,0 +1,14 @@
+---
+
+- name: Install openvpn
+  ansible.builtin.package:
+    name:
+      - openvpn
+    state: present
+
+- name: set openvpn logrotate configuration
+  ansible.builtin.copy:
+    src: logrotate_exegol_vpn
+    dest: /etc/logrotate.d/exegol_vpn
+
+...
