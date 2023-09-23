@@ -6,5 +6,12 @@
   vars:
     name: msfconsole
     package: metasploit
+  when: ansible_distribution == "Archlinux"
 
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: msfconsole
+    package: metasploit-framework
+  when: ansible_distribution == "Kali"
 ...

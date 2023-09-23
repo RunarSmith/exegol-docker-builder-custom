@@ -1,16 +1,25 @@
 ---
 # tasks file for system-base
 
+- name: Distribution name
+  debug: var=ansible_distribution
+- name: Distribution familly
+  debug: var=ansible_os_family
+
+- name: Distribution version
+  debug: var=ansible_distribution_version
+- name: Distribution release
+  debug: var=ansible_distribution_release
+- name: Distribution major version
+  debug: var=ansible_distribution_major_version
+
 - name: install base packages
   ansible.builtin.package:
     name:
       - binutils
-      - bind  # dnsutils, nslookup, dig
       - fakeroot   # used to build packages from AUR
       - git        # used to build packages from AUR
-      - iputils
       - iproute2
-      - jack2
       - logrotate
       - man-db
       # - mlocate   # replaced by plocate
@@ -20,8 +29,26 @@
       - sudo
     state: present
 
+- name: install base packages (arch)
+  ansible.builtin.package:
+    name:
+      - bind  # dnsutils, nslookup, dig
+      - iputils
+      - jack2
+    state: present
+  when: ansible_distribution == "Archlinux"
+
+- name: install base packages (debian)
+  ansible.builtin.package:
+    name:
+      - dnsutils # nslookup, dig
+      - locales
+    state: present
+  when: ansible_distribution == "Kali"
+
 - name: Set locale
   include_tasks: sys-locale.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: update Archlinux packages
   include_tasks: packages-update-archlinux.yml
@@ -29,7 +56,7 @@
 
 - name: update Debian packages
   include_tasks: packages-update-debian.yml
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Kali"
 
 - name: BlackArch
   include_tasks: packages-blackarch.yml

@@ -1,9 +1,17 @@
 ---
 
-- name: install NFS tools
+- name: install NFS tools (arch)
   ansible.builtin.package:
     name:
       - nfs-utils
     state: present
+  when: ansible_distribution == "Archlinux"
+
+# - name: install NFS tools (Kali)
+#   ansible.builtin.package:
+#     name:
+#       - nfs-utils
+#     state: present
+#   when: ansible_distribution == "Kali"
 
 ...

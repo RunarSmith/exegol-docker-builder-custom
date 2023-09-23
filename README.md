@@ -1,6 +1,20 @@
 # exegol-docker-builder-custom
 This repository hosts Dockerfiles and resources for building Exegol docker images
 
+# Installation
+
+The prefered way to install this too is first to clone exegol repository. Read Exegol documentation (https://exegol.readthedocs.io/en/latest/getting-started/install.html) to get a working exegol installation (use "Installing from sources" way).
+
+In Exegol installation directory, this is a folder "exegol-docker-build". This project is replacing this folder. So the installation is to rename existing one, and import this project:
+
+```shell
+cd exegol-installation-directory
+mv exegol-docker-build exegol-docker-build.original
+git clone https://github.com/RunarSmith/exegol-docker-builder-custom.git exegol-docker-build.original
+```
+
+That's it, you can now build custom images ^^
+
 # Exegol usage to build custom images
 
 ## Conguration
@@ -59,7 +73,7 @@ There is no distinction between official or custom images. You can use it as usu
 exegol start htb --disable-shared-network --vpn my_vpn_config.ovpn
 ```
 
-# Removing
+# Image Removing
 
 You can remove the image with :
 

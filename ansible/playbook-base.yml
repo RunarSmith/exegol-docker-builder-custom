@@ -14,6 +14,8 @@
     - c2-metasploit
     - cracker-common-tools
     - exploit-common-tools
+    - office-trilium
+    - office-vscode
     - scanner-common-tools
     - services-common-tools
     - tunnel-common-tools

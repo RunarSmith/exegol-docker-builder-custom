@@ -4,10 +4,23 @@
 - name: install common services tools
   ansible.builtin.package:
     name:
-      - gnu-netcat
       - rlwrap
       - socat
     state: present
+
+- name: install common services tools (arch)
+  ansible.builtin.package:
+    name:
+      - gnu-netcat
+    state: present
+  when: ansible_distribution == "Archlinux"
+
+- name: install common services tools (Kali)
+  ansible.builtin.package:
+    name:
+      - netcat-traditional
+    state: present
+  when: ansible_distribution == "Kali"
 
 - name: Service FTP
   include_tasks: ftp.yml

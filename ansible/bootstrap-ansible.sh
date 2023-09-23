@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# set an apt cache for Debian familly
+function set_apt_cacher() {
+    
+    if [ -f /usr/bin/apt ]; then
+        echo "Setting-up apt-cacher-ng for Debian client"
+        cat <<EOF >> /etc/hosts
+172.17.0.2    aptcacher.loc
+EOF
+
+        cat <<EOF > /etc/apt/apt.conf.d/01-aptcacheng
+Acquire::http::Proxy "http://aptcacher.loc:3142";
+EOF
+
+    fi
+}
+
+
 function set_locale()  {
     # ensure proper locale for system
     [ -f /etc/locale.gen ] && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
@@ -7,7 +24,7 @@ function set_locale()  {
 
 function install_python_virtualenv() {
     # for Debian-like OS
-    [ -f /usr/bin/apt ] && apt update -y && apt install -y python3 python3-virtualenv
+    [ -f /usr/bin/apt ] && apt update -yq && apt install -yq python3 python3-virtualenv
 
     # For arch-linux-like OS
     # sync database, update installed packages, ans install new ones
@@ -43,7 +60,8 @@ if [ $# -eq 0 ]
   then
     # first call without parameter : install and setup
     echo "No arguments supplied : install the base"
-    set_locale
+    set_apt_cacher
+    #set_locale
     install_python_virtualenv
     install_ansible
     test_ansible

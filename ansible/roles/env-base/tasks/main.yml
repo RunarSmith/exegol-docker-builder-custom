@@ -1,7 +1,7 @@
 ---
 # tasks file for env-base
 
-- name: install usefull tools
+- name: install usefull tools (1)
   ansible.builtin.package:
     name:
       - autoconf
@@ -12,15 +12,13 @@
       - gcc # C and C++ compiler
       - git
       - gnupg
-      - go
       - jq
-      - jdk11-openjdk
-      - jre11-openjdk
-      - jre11-openjdk-headless
-      - jdk17-openjdk
-      - jre17-openjdk
-      - jre17-openjdk-headless
       - make
+    state: present
+
+- name: install usefull tools (2)
+  ansible.builtin.package:
+    name:
       - nano
       - npm
       - p7zip
@@ -29,15 +27,43 @@
       #- telnet
       - tidy
       - time
+    state: present
+
+- name: install usefull tools (3)
+  ansible.builtin.package:
+    name:
       - tree
       - tmux
       - unrar
       - unzip
       - wget
-      - xz
       - zip
       - zsh
     state: present
+
+- name: install usefull tools (arch)
+  ansible.builtin.package:
+    name:
+      - go
+      - jdk11-openjdk
+      - jre11-openjdk
+      - jre11-openjdk-headless
+      - jdk17-openjdk
+      - jre17-openjdk
+      - jre17-openjdk-headless
+      - xz
+    state: present
+  when: ansible_distribution == "Archlinux"
+
+- name: install usefull tools (Kali)
+  ansible.builtin.package:
+    name:
+      - openjdk-17-jre
+      - openjdk-17-jdk
+      - openjdk-17-jdk-headless
+      - xz-utils
+    state: present
+  when: ansible_distribution == "Kali"
 
 - name: "Change shell to /bin/zsh"
   user:
@@ -53,8 +79,6 @@
     - curl
     - dnsutils
 
-
-
 - name: arsenal
   include_tasks: arsenal.yml
 
@@ -69,6 +93,7 @@
 
 - name: rust
   include_tasks: rust.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: screen
   include_tasks: screen.yml

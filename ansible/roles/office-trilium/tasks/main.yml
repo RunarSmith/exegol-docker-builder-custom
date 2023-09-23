@@ -1,0 +1,10 @@
+---
+# tasks file for office-trilium
+
+- name: install application
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: trilium
+    aur_package: trilium-bin
+
+...

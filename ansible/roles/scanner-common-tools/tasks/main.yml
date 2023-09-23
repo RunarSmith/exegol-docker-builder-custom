@@ -9,6 +9,7 @@
   with_items:
     - autorecon
     - sslscan
+  when: ansible_distribution == "Archlinux"
 
 - name: install application
   ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml

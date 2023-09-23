@@ -14,13 +14,13 @@ LABEL org.exegol.src_repository="https://github.com/ThePorgs/Exegol-images"
 
 COPY ansible /root/sources/
 
-WORKDIR /root/sources/install/ansible
+WORKDIR /root/sources
 
 RUN echo "${TAG}-${VERSION}" > /opt/.exegol_version && \
     chmod +x ./bootstrap-ansible.sh && \
     ./bootstrap-ansible.sh && \
-    ./bootstrap-ansible.sh localhost -m setup
+    ./bootstrap-ansible.sh playbook-base.yml
 
 WORKDIR /workspace
 
-ENTRYPOINT ["/.exegol/entrypoint-kali.sh"]
+ENTRYPOINT ["/.exegol/entrypoint.sh"]

@@ -2,13 +2,14 @@
 
 - name: firefox archlinux
   include_tasks: firefox_archlinux.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: install firefox
   ansible.builtin.package:
     name:
-      - firefox
+      - firefox-esr
     state: present
-  when: ansible_distribution != "Archlinux"
+  when: ansible_distribution == "Kali"
 
 
 #- name: add history

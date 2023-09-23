@@ -1,10 +1,25 @@
 ---
 
-- name: install ftp tools
+# - name: install ftp tools
+#   ansible.builtin.package:
+#     name:
+#       - python-pyftpdlib
+#     state: present
+
+- name: install ftp tools (Arch)
   ansible.builtin.package:
     name:
       - inetutils # contains the basic "ftp" client
       - python-pyftpdlib
     state: present
+  when: ansible_distribution == "Archlinux"
+
+- name: install ftp tools (Kali)
+  ansible.builtin.package:
+    name:
+      - ftp
+      - python3-pyftpdlib
+    state: present
+  when: ansible_distribution == "Kali"
 
 ...
