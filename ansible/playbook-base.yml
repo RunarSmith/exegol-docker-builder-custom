@@ -10,18 +10,18 @@
   roles:
     - env-base
     - exegol-base # exegol base deployment
-    #- c2-havoc
-    #- c2-metasploit
-    #- cracker-common-tools
-    #- exploit-common-tools
-    #- office-trilium
-    #- office-vscode
+    - c2-havoc
+    - c2-metasploit
+    - cracker-common-tools
+    - exploit-common-tools
+    - office-trilium
+    - office-vscode
     - recon-dradis
-    #- scanner-common-tools
-    #- services-common-tools
-    #- tunnel-common-tools
-    #- webapp-common-tools
-    #- web-common-tools
-    #- web-burpsuite
-    #- wordlists-common-tools
+    - scanner-common-tools
+    - services-common-tools
+    - tunnel-common-tools
+    - webapp-common-tools
+    - web-common-tools
+    - web-burpsuite
+    - wordlists-common-tools
     - post-install
