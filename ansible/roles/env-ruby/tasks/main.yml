@@ -1,0 +1,24 @@
+---
+# tasks file for env-ruby
+
+- name: reason this role is called
+  debug:
+    msg: >-
+      Role calling by: {{ ansible_parent_role_names | default(role_name) }}
+
+
+- name: install ruby
+  ansible.builtin.package:
+    name:
+      - ruby
+      - ruby-bundler
+    state: present
+
+- name: bundle set path
+  command: "bundle config path vendor/"
+
+- name: install application (arch)
+  ansible.builtin.include_tasks: rvm-archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
+...

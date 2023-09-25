@@ -1,0 +1,20 @@
+---
+# tasks file for env-ruby
+
+- name: install dependencies
+  ansible.builtin.package:
+    name:
+      - base-devel
+      - tar
+      - gzip
+      - diffutils
+      - git
+      - curl
+    state: present
+
+# https://wiki.archlinux.org/title/RVM#Using_RVM
+- name: get install script for rvm
+  #shell: "curl -L get.rvm.io > /tmp/rvm-install"
+  shell: "curl -L https://get.rvm.io | bash"
+
+...

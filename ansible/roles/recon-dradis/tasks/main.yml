@@ -1,0 +1,15 @@
+---
+# tasks file for recon-dradis
+
+- name: install application (arch)
+  ansible.builtin.include_tasks: dradis-archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: install application (Kali)
+  ansible.builtin.include_tasks: ../../lib-tasks/generic-add-app.yml
+  vars:
+    name: dradis-ce
+    package: dradis
+  when: ansible_distribution == "Kali"
+
+...

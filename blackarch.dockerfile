@@ -23,4 +23,7 @@ RUN echo "${TAG}-${VERSION}" > /opt/.exegol_version && \
 
 WORKDIR /workspace
 
+# Dradis web UI
+EXPOSE 3000/tcp
+
 ENTRYPOINT ["/.exegol/entrypoint.sh"]

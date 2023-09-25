@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+cd /opt/dradis-ce/
+RubyVersion=$( cat .ruby-version )
+echo "Will be using Ruby version ${RubyVersion}"
+
+# use ruby version
+source /usr/local/rvm/scripts/rvm
+rvm use ${RubyVersion}
+
+# Go!
+./bin/rails server -b 0.0.0.0 -p 3000

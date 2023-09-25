@@ -1,0 +1,94 @@
+---
+# tasks file for recon-dradis
+
+#- name: install dependencies
+#  ansible.builtin.package:
+#    name:
+#      - base-devel
+#      - tar
+#      - gzip
+#      - diffutils
+#      - git
+#      - curl
+#    state: present
+
+# optionnal: this dependency avoid having to recompile and install development libraries
+- name: install dependencies
+  ansible.builtin.package:
+    name:
+      - ruby-pg
+    state: present
+
+
+# https://wiki.archlinux.org/title/RVM#Using_RVM
+#- name: get install script for rvm
+  #shell: "curl -L get.rvm.io > /tmp/rvm-install"
+#  shell: "curl -L https://get.rvm.io | bash"
+
+#- name: install rvm
+#  shell: "bash < /tmp/rvm-install"
+
+- name: install version 3.1.2 of ruby
+  shell: "/usr/local/rvm/bin/rvm install 3.1.2"
+
+# https://dradis.com/ce/documentation/install_git.html
+- name: get dradis
+  git:
+    repo: https://github.com/dradis/dradis-ce.git
+    dest: /opt/dradis-ce
+    update: true
+
+#- name: update configuration
+#  ansible.builtin.lineinfile:
+#    path: /opt/dradis-ce/config/database.yml
+#    regexp: '^ *database: db/development.sqlite3$'
+#    line: '  database: /workspace/dradis-development.sqlite3'
+#    backup: yes
+
+- name: set dradis database config file
+  ansible.builtin.copy:
+    src: database.yml
+    dest: /opt/dradis-ce/config/database.yml
+    owner: root
+    group: root
+    mode: 'ug+rw'
+
+- name: setup script must not start the web server, yet
+  ansible.builtin.lineinfile:
+    path: /opt/dradis-ce/bin/setup
+    regexp: "^  system! 'bin/rails server -p 8080'"
+    line: "  "
+    backup: yes
+
+- name: ensure wrapper scripts folder exists /root/.local/bin
+  ansible.builtin.file:
+    path: /root/.local/bin
+    state: directory
+    recurse: yes
+
+- name: set dradis-start file
+  ansible.builtin.copy:
+    src: dradis-start
+    dest: /root/.local/bin/dradis-start
+    owner: root
+    group: root
+    mode: 'ug+x'
+
+- name: ensure EOF in files
+  ansible.builtin.replace:
+    dest: "{{ item }}"
+    regexp: "\r"
+  with_items:
+    - /opt/dradis-ce/config/database.yml
+    - /root/.local/bin/dradis-start
+
+- name: setup dradis
+  ansible.builtin.shell:
+    chdir: /opt/dradis-ce/
+    cmd: >
+      source /usr/local/rvm/scripts/rvm
+      rvm use $( cat .ruby-version )
+      bundle install
+      ./bin/setup
+
+...
