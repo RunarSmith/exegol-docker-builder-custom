@@ -7,7 +7,7 @@
 # Get its IP address :
 # docker inspect apt-cacher-ng
 
-FROM ubuntu:latest
+FROM ubuntu:24.10
 
 # Expose the cache directory for volume binding
 # VOLUME ["/var/cache/apt-cacher-ng"]
