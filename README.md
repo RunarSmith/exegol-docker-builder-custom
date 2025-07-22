@@ -1,3 +1,12 @@
+!!! This repository is no more maintained !!!
+
+A new system is beeing build : volund
+See it repo : [https://github.com/RunarSmith/volund](https://github.com/RunarSmith/volund)
+
+The content of this repo will be merged in this tool, especially the ansible roles.
+
+---
+
 # exegol-docker-builder-custom
 This repository hosts Dockerfiles and resources for building Exegol docker images
 
